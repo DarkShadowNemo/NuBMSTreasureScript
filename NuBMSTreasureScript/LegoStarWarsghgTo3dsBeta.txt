@@ -1,0 +1,347 @@
+open FDSE ? 1 ;
+log MEMORY_FILE1 0 0 ;
+log MEMORY_FILE2 0 0 ;
+log MEMORY_FILE3 0 0 ;
+log MEMORY_FILE4 0 0 ;
+log MEMORY_FILE5 0 0 ;
+GoTo 0 0 ;
+Math count = 0 ;
+Math gt = 0 ;
+Math Qprime = 0 ;
+Math red = 0 ;
+SavePos found 0 ;
+Get QT ASIZE 0 ;
+For T = 0 < QT ;
+GoTo found 0 ;
+findloc OFFSET string "\x03\x02\x00\x01\x03\x80" 0 0 ;
+If OFFSET = 0 ;
+Math t = QT ;
+Math twotest = 1 ;
+EndIF ;
+If OFFSET != 0 ;
+GoTo OFFSET 0 ;
+GoTo 6 0 SEEK_CUR ;
+Get onetest Byte 0 ;
+Get twotest Byte 0 ;
+SavePos found 0 ;
+EndIF ;
+If twotest = 109 ;
+Math zy = 101 ;
+Else ;
+Math zy = 104 ;
+EndIF ;
+Padding 4
+SavePos qx 0 ;
+If found = qx ;
+Math zy += 1 ;
+EndIF ;
+If zy = 102 ;
+Math onetest /= 2 ;
+Put count Long MEMORY_FILE1 ;
+Math count += onetest ;
+Math foxcount = count ;
+Math foxcount -= 1 ;
+Put foxcount Long MEMORY_FILE1 ;
+Put onetest Long MEMORY_FILE1 ;
+Put found Long MEMORY_FILE1 ;
+EndIF ;
+Next T ;
+Get mqa ASIZE MEMORY_FILE1 ;
+Math mqa /= 16 ;
+For jjj = 1 To mqa ;
+GoTo gt MEMORY_FILE1 ;
+Get min long MEMORY_FILE1 ;
+Get max long MEMORY_FILE1 ;
+Get nuv long MEMORY_FILE1 ;
+Get loc long MEMORY_FILE1 ;
+SavePos gt MEMORY_FILE1 ;
+Math hhhggg = max ;
+Math hhhggg -= 2 ;
+GoTo loc 0 ;
+SavePos werefox 0 ;
+For cvb = 1 To nuv ;
+GoTo werefox 0 ;
+Get first Byte 0 ;
+Get second Byte 0 ;
+SavePos werefox 0 ;
+GoTo Qprime MEMORY_FILE2 ;
+If second > 127 ;
+Math second -= 256 ;
+Endif ;
+Math nb = second ;
+Math nb *= 256 ;
+Math nb += first ;
+Put nb float MEMORY_FILE2 ;
+SavePos Qprime MEMORY_FILE2 ;
+
+
+GoTo werefox 0 ;
+Get first Byte 0 ;
+Get second Byte 0 ;
+SavePos werefox 0 ;
+GoTo Qprime MEMORY_FILE2 ;
+If second > 127 ;
+Math second -= 256 ;
+Endif ;
+Math nb = second ;
+Math nb *= 256 ;
+Math nb += first ;
+Put nb float MEMORY_FILE2 ;
+SavePos Qprime MEMORY_FILE2 ;
+
+
+
+GoTo werefox 0 ;
+Get first Byte 0 ;
+Get second Byte 0 ;
+SavePos werefox 0 ;
+GoTo Qprime MEMORY_FILE2 ;
+If second > 127 ;
+Math second -= 256 ;
+Endif ;
+Math nb = second ;
+Math nb *= 256 ;
+Math nb += first ;
+Put nb float MEMORY_FILE2 ;
+SavePos Qprime MEMORY_FILE2 ;
+
+GoTo werefox 0 ;
+GoTo 10 0 SEEK_CUR ;
+SavePos werefox 0 ;
+
+
+Next cvb ;
+log MEMORY_FILE9 0 0 ;
+GoTo werefox 0 ;
+findloc OFFSETSET string "\x80\x3F\x83\xC0" 0 0 ;
+Math OFFSETSET += 4 ;
+GoTo OFFSETSET 0 ;
+Get uu Byte 0 ;
+Get un Byte 0 ;
+SavePos werefox 0 ;
+Math hdeerh = 0 ;
+Math deerdeerdeer = 0 ;
+log MEMORY_FILE4 0 0 ;
+Math uu *= 4 ;
+For ss = 1 To uu ;
+Math nulldeer = 0 ;
+GoTo werefox 0 ;
+Get type1 Byte 0 ;
+SavePos werefox 0 ;
+Math type2 = type1 ;
+If type1 > 127 ;
+Math type2 -= 128 ;
+Math type2 /= 3 ;
+Math nulldeer = 128 ;
+Else ;
+Math type2 = type1 ;
+Math type2 /= 3 ;
+Math nulldeer = 0 ;
+EndIF ;
+GoTo hdeerh MEMORY_FILE4 ;
+Put type2 Byte MEMORY_FILE4 ;
+SavePos hdeerh MEMORY_FILE4 ;
+GoTo deerdeerdeer MEMORY_FILE9 ;
+Put nulldeer Byte MEMORY_FILE9 ;
+SavePos deerdeerdeer MEMORY_FILE9 ;
+Next ss ;
+log MEMORY_FILE5 0 0 ;
+log MEMORY_FILE6 0 0 ;
+log MEMORY_FILE7 0 0 ;
+log MEMORY_FILE8 0 0 ;
+
+
+Get size ASIZE MEMORY_FILE4 ;
+Math size -= 2 ;
+
+
+
+GoTo 0x0 MEMORY_FILE4 ;
+SavePos base MEMORY_FILE4 ;
+Math dudu = 0 ;
+Math kudu = 0 ;
+For rrr = 1 To size ;
+GoTo dudu MEMORY_FILE4 ;
+Get type1 Byte MEMORY_FILE4 ;
+SavePos dudu MEMORY_FILE4 ;
+Get type2 Byte MEMORY_FILE4 ;
+Get type3 Byte MEMORY_FILE4 ;
+
+Math vixenvixen = 0 ;
+
+
+
+Math type1 += min ;
+Math type2 += min ;
+Math type3 += min ;
+
+
+If type1 > hhhggg ;
+Math vixenvixen += 1 ;
+EndIF ;
+
+If type2 > hhhggg ;
+Math vixenvixen += 1 ;
+EndIF ;
+
+
+If type3 > hhhggg ;
+Math vixenvixen += 1 ;
+EndIF ;
+
+
+
+GoTo kudu MEMORY_FILE9 ;
+Get ddd1 Byte MEMORY_FILE9 ;
+SavePos kudu MEMORY_FILE9 ;
+Get ddd2 Byte MEMORY_FILE9 ;
+Get ddd3 Byte MEMORY_FILE9 ;
+
+
+
+
+
+
+
+If vixenvixen = 0 ;
+If ddd3 != 128 ;
+GoTo red MEMORY_FILE3 ;
+Put type1 Short MEMORY_FILE3 ;
+Put type2 Short MEMORY_FILE3 ;
+Put type3 Short MEMORY_FILE3 ;
+Put 0 Short MEMORY_FILE3 ;
+Put type1 Short MEMORY_FILE3 ;
+Put type3 Short MEMORY_FILE3 ;
+Put type2 Short MEMORY_FILE3 ;
+Put 0 Short MEMORY_FILE3 ;
+SavePos red MEMORY_FILE3 ;
+EndIF ;
+EndIF ;
+Next rrr ;
+Next jjj ;
+Get Zw3 ASIZE MEMORY_FILE3 ;
+Math Zf3 = Zw3 ;
+Math Zf3 /= 8 ;
+Get Zw2 ASIZE MEMORY_FILE2 ;
+Math Zf2 = Zw2 ;
+Math Zf2 /= 12 ;
+Math FaceNumber = Zf3 ;
+Math VertexNumber = Zf2 ;
+Math Snake = VertexNumber ;
+Math Snake *= 12 ;
+Math Dragon = FaceNumber ;
+Math Dragon *= 8 ;
+Math Sum = Dragon ;
+Math Sum += Snake ;
+Math QQQ = 60 ;
+Math QQQ += Snake ;
+Math QQ = 52 ;
+Math qaz = 0 ;
+Math wsx = 0 ;
+For Vertex = 0 < Zw2 ;
+GoTo qaz MEMORY_FILE2 ;
+Get D byte MEMORY_FILE2 ;
+SavePos qaz MEMORY_FILE2 ;
+GoTo QQ 1 ;
+Put D Byte 1 ;
+SavePos QQ 1 ;
+Next Vertex ;
+For Face = 0 < Zw3 ;
+GoTo wsx MEMORY_FILE3 ;
+Get D byte MEMORY_FILE3 ;
+SavePos wsx MEMORY_FILE3 ;
+GoTo QQQ 1 ;
+Put D Byte 1 ;
+SavePos QQQ 1 ;
+Next Face ;
+GoTo 0 1 ;
+set M Byte 0x4D ;
+Put M Byte 1 ;
+set M Byte 0x4D ;
+Put M Byte 1 ;
+Math M = Sum ;
+Math M += 60 ;
+Put M Long 1 ;
+set M Byte 0x02 ;
+Put M Byte 1 ;
+set M Byte 0x00 ;
+Put M Byte 1 ;
+set M Byte 0x0A ;
+Put M Byte 1 ;
+set M Byte 0x00 ;
+Put M Byte 1 ;
+set M Byte 0x00 ;
+Put M Byte 1 ;
+set M Byte 0x00 ;
+Put M Byte 1 ;
+set M Byte 0x03 ;
+Put M Byte 1 ;
+set M Byte 0x00 ;
+Put M Byte 1 ;
+set M Byte 0x00 ;
+Put M Byte 1 ;
+set M Byte 0x00 ;
+Put M Byte 1 ;
+set M Byte 0x3D ;
+Put M Byte 1 ;
+set M Byte 0x3D ;
+Put M Byte 1 ;
+Math M = Sum 
+Math M += 44 ;
+Put M Long 1 ;
+set M Byte 0x00 ;
+Put M Byte 1 ;
+set M Byte 0x40 ;
+Put M Byte 1 ;
+Math M = Sum 
+Math M += 38 ;
+Put M Long 1 ;
+set M Byte 0x64 ;
+Put M Byte 1 ;
+set M Byte 0x72 ;
+Put M Byte 1 ;
+set M Byte 0x61 ;
+Put M Byte 1 ;
+set M Byte 0x67 ;
+Put M Byte 1 ;
+set M Byte 0x6F ;
+Put M Byte 1 ;
+set M Byte 0x6E ;
+Put M Byte 1 ;
+set M Byte 0x6A ;
+Put M Byte 1 ;
+set M Byte 0x61 ;
+Put M Byte 1 ;
+set M Byte 0x6E ;
+Put M Byte 1 ;
+set M Byte 0x00 ;
+Put M Byte 1 ;
+set M Byte 0x00 ;
+Put M Byte 1 ;
+set M Byte 0x41 ;
+Put M Byte 1 ;
+Math M = Sum 
+Math M += 22 ;
+Put M Long 1 ;
+Set M Byte 0x10 ;
+Put M Byte 1 ;
+set M Byte 0x41 ;
+Put M Byte 1 ;
+Math M = Snake ;
+Math M += 8 ;
+Put M Long 1 ;
+Math M = VertexNumber ;
+Put M Short 1 ;
+Math JumpJump = Snake ;
+Math JumpJump += 52 ;
+GoTo JumpJump 1 ;
+set M Byte 0x20 ;
+Put M Byte 1 ;
+set M Byte 0x41 ;
+Put M Byte 1 ;
+Math M = FaceNumber ;
+Math M *= 8 ;
+Math M += 8 ;
+Put M Long 1 ;
+Math M = FaceNumber ;
+Put M Short 1 ;
